@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Create Directory 1 and File') {
+            steps {
+                sh '''
+                mkdir -p direc1
+                echo "This is sample file" > direc1/file.txt
+                '''
+            }
+        }
+
+        stage('Create Directory 2') {
+            steps {
+                sh '''
+                mkdir -p direc2
+                '''
+            }
+        }
+
+        stage('Copy File') {
+            steps {
+                sh '''
+                cp direc1/file.txt direc2/
+                '''
+            }
+        }
+
+        stage('Verify Files') {
+            steps {
+                sh '''
+                echo "Directory 1 contents:"
+                ls direc1
+                echo "Directory 2 contents:"
+                ls direc2
+                '''
+            }
+        }
+
+    }
+}
